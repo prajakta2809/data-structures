@@ -1,5 +1,4 @@
 #include<iostream>
-#include<cstdlib>
 using namespace std;
 class Node {
 public:
@@ -7,23 +6,19 @@ public:
     Node *next;
 };
 
-Node* insertNodeBeforeGivenNode(Node* head,int beforeNodeValue,int n) {
-    Node *newNode = (Node*)malloc(sizeof(Node));
-    newNode->data= n;
-    newNode->next = NULL;
-    if(head->data==beforeNodeValue) {
-        newNode->next = head;
-        return newNode;
-    } else {
-        Node *tmp = head,*prev=NULL;
-        do {
-            prev = tmp;
+Node *deleteEndNode(Node *head) {
+    if(head==NULL) {
+        return head;
+    }
+    else if(head->next==NULL) {
+        return NULL;
+    }
+    else {
+        Node *tmp=head;
+        while(tmp->next->next!=NULL) {
             tmp=tmp->next;
-
-        } while(tmp->data!=beforeNodeValue);
-        newNode->next = tmp;
-        prev->next = newNode;
-
+        }
+        tmp->next=NULL;
     }
     return head;
 }
@@ -34,6 +29,7 @@ void displaySinglyLinkedList(Node *head) {
         cout<<temp->data<<" ";
         temp=temp->next;
     }
+    cout<<endl;
     return;
 }
 
@@ -52,16 +48,15 @@ int main() {
     }
 
     displaySinglyLinkedList(head);
-    cout<<endl;
-    head = insertNodeBeforeGivenNode(head,5,100);//before 5 we are inserting 100
+    head = deleteEndNode(head);
+
     displaySinglyLinkedList(head);
-    cout<<endl;
-    head = insertNodeBeforeGivenNode(head,100,2);//before 100 we are inserting 2
+    head = deleteEndNode(head);
+
     displaySinglyLinkedList(head);
-    cout<<endl;
-    head = insertNodeBeforeGivenNode(head,10,9);//before 10 we are inserting 9
+    head = deleteEndNode(head);
+
     displaySinglyLinkedList(head);
-    cout<<endl;
 
     return 0;
 }
